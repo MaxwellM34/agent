@@ -1,15 +1,30 @@
 import os
 
-def get_files_info(working_directory, directory="~/workspace/bootdev/agent"):
-    working_dir_abs = os.path.abspath(directory)
-    print(working_dir_abs)
-    print(f"hello{os.path.abspath(directory)}")
-    target_dir = os.path.normpath(os.path.join(working_dir_abs, directory))
-    os.path.commonpath()
 
 
-def main():
-    get_files_info("agent")
+def get_files_info(working_directory, directory="."):
+    try:
+        working_dir_abs = os.path.abspath(working_directory)
+        target_dir = os.path.normpath(os.path.join(working_dir_abs, directory))
 
-if __name__ == "__main__":
-    main()
+        valid_target_dir = os.path.commonpath([working_dir_abs, target_dir]) == working_dir_abs
+
+        if not valid_target_dir:
+            return f'''Result for '{directory}' directory:
+    Error: Cannot list "{directory}" as it is outside the permitted working directory'''
+
+        if not os.path.isdir(target_dir):
+            return f'''Result for '{directory}' directory:
+    Error: "{directory}" is not a directory'''
+
+        header = "Result for current directory:" if directory == "." else f"Result for '{directory}' directory:"
+        output = [header]
+        for i in os.listdir(target_dir):
+            item_path = os.path.join(target_dir, i)
+            file_size = os.path.getsize(item_path)
+            is_dir = os.path.isdir(item_path)
+            output.append(f'  - {i}: file_size={file_size} bytes, is_dir={is_dir}')
+        return '\n'.join(output)
+    except Exception as e:
+        return f"Error: {e}"
+    

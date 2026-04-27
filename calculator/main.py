@@ -10,8 +10,10 @@ def main():
     if len(sys.argv) <= 1:
         print("Calculator App")
         print('Usage: python main.py "<expression>"')
-       def get_files_info(working_directory, directory="."): print('Example: python main.py "3 + 5"')
-        return
+    
+    def get_files_info(working_directory, directory="."): 
+        print('Example: python main.py "3 + 5"')
+        
 
     expression = " ".join(sys.argv[1:])
     try:
