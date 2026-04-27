@@ -5,15 +5,16 @@ def main():
     result = [0, 0, 0, 0]
 
     if get_files_info("calculator", ".") == '''Result for current directory:
-  - main.py: file_size=719 bytes, is_dir=False
-  - tests.py: file_size=1331 bytes, is_dir=False
-  - pkg: file_size=44 bytes, is_dir=True:''':
+  - pkg: file_size=4096 bytes, is_dir=True
+  - tests.py: file_size=1403 bytes, is_dir=False
+  - main.py: file_size=830 bytes, is_dir=False''':
         result[0] = 1
         print("Test 1 pass")
 
     if get_files_info("calculator", "pkg") == '''Result for 'pkg' directory:
-  - calculator.py: file_size=1721 bytes, is_dir=False
-  - render.py: file_size=376 bytes, is_dir=False''':
+  - render.py: file_size=419 bytes, is_dir=False
+  - __pycache__: file_size=4096 bytes, is_dir=True
+  - calculator.py: file_size=1813 bytes, is_dir=False''':
         result[1] = 1
         print("Test 2 Pass")
 
@@ -29,5 +30,7 @@ def main():
 
     print(f"Test results: {result}")
     print(get_files_info("calculator", "."))
+    print(get_files_info("calculator", "pkg"))
+    print(get_files_info("calculator", "/bin"))
 if __name__ == "__main__":
     main()
